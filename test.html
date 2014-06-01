@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <script type="text/javascript" charset="utf-8" src="scripts/dataentry.js"></script>
+    </head>
+    <body>
+        <div>
+            <textarea name="" id="textarea" rows="8" cols="40"></textarea>
+        </div>
+        <div>
+            <input type="button" id="type" value="type" />
+            <input type="button" id="stop" value="stop" />
+        </div>
+        <script type="text/javascript" charset="utf-8">
+            var dt;
+            document.getElementById("type").onclick = function (argument) {
+                dt = DataEntry.makeDataEntry()  // make new object
+                dt.attachToInput("textarea")  // attach to input element
+            };
+            document.getElementById("stop").onclick = function (argument) {
+                dt.stop();
+            }
+        </script>
+    </body>
+</html>
