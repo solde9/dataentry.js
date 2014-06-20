@@ -23,6 +23,7 @@
     }
     return size;
   },
+
   // perform callback and set timeout
   typeProcess = function (callback, process_id_obj) {
     var that = this;
@@ -45,20 +46,26 @@
   DataEntry.fn = DataEntry.prototype = {
     // max time elapsed between keystrokes
     MAX_TIME: 250,
+
     // min time elapsed between keystrokes
     MIN_TIME : 150,
+
     // id of background process
     process_ids: [],
+
     // time to next keystroke
     time: 0,
+
     // get random character
     type : function () {
       return String.fromCharCode(Math.floor((Math.random()*getSize(key))+1));
     },
+
     // get random char code
     typeCharCode : function () {
       return Math.floor((Math.random()*getSize(key))+1);    
     },
+
     // attach input ant start typing
     attachType: function (inputId) {
       if (!inputId) {
@@ -75,12 +82,14 @@
       // save to delete later
       this.process_ids.push(process_id_obj);
     },
+
     // stop typing
     stop: function () {
       for (var i = 0; i < this.process_ids.length; i++) {
         clearTimeout(this.process_ids[i].id);
       }
     },
+
     // delete content
     attachDelete: function (inputId) {
       if (!inputId) {
@@ -96,6 +105,7 @@
       // save to delete later
       this.process_ids.push(process_id_obj);
     },
+
   };
 
   DataEntry.makeDataEntry = function (time) {
