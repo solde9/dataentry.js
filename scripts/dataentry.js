@@ -5,7 +5,7 @@
 * Released under the MIT license.
 *
 * > dt = DataEntry.makeDataEntry()  // make new object
-* > dt.attachToInput("input")  // attach to input element
+* > dt.attachType("input")  // attach to input element
 *
 */
 (function( window ) {
@@ -24,12 +24,15 @@
     return size;
   },
   // perform callback and set timeout
-  typeProcess = function (callback, obj) {
-    obj.process_id = setTimeout(function () {
+  typeProcess = function (callback, process_id_obj) {
+    var that = this;
+
+    process_id_obj.id = setTimeout(function () {
       callback();
-      obj.time = Math.floor((obj.MIN_TIME + Math.random() * (obj.MAX_TIME - obj.MIN_TIME ) ));
-      typeProcess(callback,  obj);
-    }, obj.time);
+      that.time = Math.floor((that.MIN_TIME + Math.random() * (that.MAX_TIME - that.MIN_TIME ) ));
+      typeProcess.apply(that, [callback, process_id_obj]);
+    }, this.time);
+
   };
 
   DataEntry = function (time) {
@@ -45,7 +48,7 @@
     // min time elapsed between keystrokes
     MIN_TIME : 150,
     // id of background process
-    process_id: 0,
+    process_ids: [],
     // time to next keystroke
     time: 0,
     // get random character
@@ -57,16 +60,42 @@
       return Math.floor((Math.random()*getSize(key))+1);    
     },
     // attach input ant start typing
-    attachToInput: function (input) {
+    attachType: function (inputId) {
+      if (!inputId) {
+        return; 
+      }
+      var process_id_obj = {}; 
       that = this;
-      typeProcess(function () {
-        document.getElementById(input).value = document.getElementById(input).value + that.type();
-      },  that );
+
+      var input = document.getElementById(inputId);
+      typeProcess.apply(this, [function () {
+        input.value = input.value + that.type();
+      }, process_id_obj]);
+
+      // save to delete later
+      this.process_ids.push(process_id_obj);
     },
     // stop typing
     stop: function () {
-      clearTimeout(this.process_id);
-    }
+      for (var i = 0; i < this.process_ids.length; i++) {
+        clearTimeout(this.process_ids[i].id);
+      }
+    },
+    // delete content
+    attachDelete: function (inputId) {
+      if (!inputId) {
+        return; 
+      }
+      var process_id_obj = {}; 
+
+      var input = document.getElementById(inputId);
+      typeProcess.apply(this, [function () {
+        input.value = input.value.substring(0, input.value.length - 1);
+      }, process_id_obj]);
+
+      // save to delete later
+      this.process_ids.push(process_id_obj);
+    },
   };
 
   DataEntry.makeDataEntry = function (time) {
@@ -74,7 +103,7 @@
   };
 
   window.DataEntry = DataEntry;
-
+  
 }(window));
 
-// vim:set ts=2 sw=2 expandtab:
+// vim:set ts=2 sw=2 sts=2 expandtab:

@@ -12,16 +12,19 @@
         <div>
             <input type="button" id="type" value="type" />
             <input type="button" id="stop" value="stop" />
+            <input type="button" id="delete" value="delete" />
         </div>
         <script type="text/javascript" charset="utf-8">
-            var dt;
-            document.getElementById("type").onclick = function (argument) {
-                dt = DataEntry.makeDataEntry()  // make new object
-                dt.attachToInput("textarea")  // attach to input element
+            var dt = DataEntry.makeDataEntry();
+            document.getElementById("type").onclick = function () {
+                dt.attachType("textarea")  // attach to input element
             };
-            document.getElementById("stop").onclick = function (argument) {
+            document.getElementById("stop").onclick = function () {
                 dt.stop();
-            }
+            };
+            document.getElementById("delete").onclick = function () {
+                dt.attachDelete("textarea");
+            };
         </script>
     </body>
 </html>
