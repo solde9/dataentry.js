@@ -14,16 +14,29 @@
             <input type="button" id="stop" value="stop" />
             <input type="button" id="delete" value="delete" />
         </div>
+        <div>
+            <textarea name="" id="textareaClone" rows="8" cols="40"></textarea>
+        </div>
+        <div>
+            <input type="button" id="clone" value="clone" />
+        </div>
         <script type="text/javascript" charset="utf-8">
             var dt = DataEntry.makeDataEntry();
             document.getElementById("type").onclick = function () {
-                dt.attachType("textarea")  // attach to input element
+                var input = document.getElementById("textarea");
+                dt.attachType(input)  // attach to input element
             };
             document.getElementById("stop").onclick = function () {
                 dt.stop();
             };
             document.getElementById("delete").onclick = function () {
-                dt.attachDelete("textarea");
+                var input = document.getElementById("textarea");
+                dt.attachDelete(input);
+            };
+            document.getElementById("clone").onclick = function () {
+                var input = document.getElementById("textarea");
+                var inputClone = document.getElementById("textareaClone");
+                dt.attachClone(input, inputClone);
             };
         </script>
     </body>

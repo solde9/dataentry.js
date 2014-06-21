@@ -67,14 +67,13 @@
     },
 
     // attach input ant start typing
-    attachType: function (inputId) {
-      if (!inputId) {
+    attachType: function (input) {
+      if (!input) {
         return; 
       }
       var process_id_obj = {}; 
       that = this;
 
-      var input = document.getElementById(inputId);
       typeProcess.apply(this, [function () {
         input.value = input.value + that.type();
       }, process_id_obj]);
@@ -91,13 +90,12 @@
     },
 
     // delete content
-    attachDelete: function (inputId) {
-      if (!inputId) {
+    attachDelete: function (input) {
+      if (!input) {
         return; 
       }
       var process_id_obj = {}; 
 
-      var input = document.getElementById(inputId);
       typeProcess.apply(this, [function () {
         input.value = input.value.substring(0, input.value.length - 1);
       }, process_id_obj]);
@@ -105,6 +103,16 @@
       // save to delete later
       this.process_ids.push(process_id_obj);
     },
+
+    // attach an input to copy contents
+    attachClone: function (input, inputClone) {
+      if (!input || !inputClone) {
+        return; 
+      }
+      input.onkeyup = function (e) {
+        inputClone.value = input.value;
+      };
+    }
 
   };
 
