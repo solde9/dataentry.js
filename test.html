@@ -13,6 +13,7 @@
             <input type="button" id="type" value="type" />
             <input type="button" id="stop" value="stop" />
             <input type="button" id="delete" value="delete" />
+            <input type="button" id="retype" value="retype" title="type text in textarea" />
         </div>
         <div>
             <textarea name="" id="textareaClone" rows="8" cols="40"></textarea>
@@ -37,6 +38,11 @@
                 var input = document.getElementById("textarea");
                 var inputClone = document.getElementById("textareaClone");
                 dt.attachClone(input, inputClone);
+            };
+            document.getElementById("retype").onclick = function () {
+                var input = document.getElementById("textarea");
+                var text = input.value;
+                dt.attachType(input, text)  // attach to input element
             };
         </script>
     </body>
