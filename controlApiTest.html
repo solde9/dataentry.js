@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <script type="text/javascript" charset="utf-8" src="scripts/dataentry.js"></script>
+    </head>
+    <body>
+        <div>
+            <input name="" type="text" id="text1" ></input>
+            <input name="" type="text" id="text2" ></input>
+        </div>
+        <script type="text/javascript" charset="utf-8">
+            var dt = DataEntry.makeDataEntry(),
+                input = document.getElementById("textarea");
+
+            dt.controlApi.addElement(document.getElementById("text1"));
+            dt.controlApi.addElement(document.getElementById("text2"));
+
+            window.onclick = function () {
+                dt.controlApi.clearSelect();
+            }
+
+        </script>
+    </body>
+</html>

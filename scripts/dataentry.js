@@ -7,6 +7,9 @@
 * > dt = DataEntry.makeDataEntry()  // make new object
 * > dt.attachType("input")  // attach to input element
 *
+* TODO:
+*   - get text input, assign tab index 
+*
 */
 (function( window ) {
 
@@ -64,7 +67,7 @@
     }
   };
 
-  DataEntry.fn = DataEntry.prototype = {
+  DataEntry.prototype = {
     // max time elapsed between keystrokes
     max_time: 250,
 
@@ -146,7 +149,67 @@
       input.onkeyup = function (e) {
         inputClone.value = input.value;
       };
-    }
+    },
+
+    // methods to manage inputs
+    controlApi: { 
+      // elements controled by the api
+      elements: [],
+
+      // keys pressed on elements
+      keys: [],
+      
+      // add element to control
+      addElement: function (elem) {
+        this.elements.push(elem);
+
+        // keys pressed
+        var keys = this.keys,
+
+        that = this,
+
+        // key press event controller
+        // http://www.kirupa.com/html5/keyboard_events_in_javascript.htm 
+        keyPressListener = function (e) {
+          // store an entry for every key pressed
+          keys[e.keyCode] = true;
+
+          // Ctrl +  A/a
+          if (keys[17] && keys[65]) {
+            that.selectAll();
+            e.preventDefault();
+          }
+
+        },
+
+        // key up event controller
+        // http://www.kirupa.com/html5/keyboard_events_in_javascript.htm 
+        keyUpListener = function (e) {
+          // mark keys that were released
+          keys[e.keyCode] = false;
+        };
+
+        elem.addEventListener("keydown",keyPressListener);
+        elem.addEventListener("keyup",keyUpListener);
+      },
+
+      // select all elements
+      selectAll: function () {
+        for (var i = 0; i < this.elements.length; i++) {
+          this.elements[i].style.backgroundColor = "#3399FF";
+          this.elements[i].style.color = "white";
+        }
+      },
+
+      // clear selection
+      clearSelect: function () {
+        for (var i = 0; i < this.elements.length; i++) {
+          this.elements[i].style.backgroundColor = "";
+          this.elements[i].style.color = "";
+        }
+      }
+
+    } // controlApi 
 
   };
 
@@ -155,6 +218,7 @@
   };
 
   window.DataEntry = DataEntry;
+
 
 }(window));
 
