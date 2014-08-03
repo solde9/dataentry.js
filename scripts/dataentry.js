@@ -169,7 +169,6 @@
         that = this,
 
         // key press event controller
-        // http://www.kirupa.com/html5/keyboard_events_in_javascript.htm 
         keyPressListener = function (e) {
           // store an entry for every key pressed
           keys[e.keyCode] = true;
@@ -183,7 +182,6 @@
         },
 
         // key up event controller
-        // http://www.kirupa.com/html5/keyboard_events_in_javascript.htm 
         keyUpListener = function (e) {
           // mark keys that were released
           keys[e.keyCode] = false;
