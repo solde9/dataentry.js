@@ -156,6 +156,9 @@
       // elements controled by the api
       elements: [],
 
+      // the elements are selected
+      selected: false,
+
       // keys pressed on elements
       keys: [],
       
@@ -179,6 +182,12 @@
             e.preventDefault();
           }
 
+          // delete
+          if (keys[8] && that.selected) {
+            that.deleteAll()
+            e.preventDefault();
+          }
+
         },
 
         // key up event controller
@@ -193,6 +202,7 @@
 
       // select all elements
       selectAll: function () {
+        this.selected = true;
         for (var i = 0; i < this.elements.length; i++) {
           this.elements[i].style.backgroundColor = "#3399FF";
           this.elements[i].style.color = "white";
@@ -201,9 +211,18 @@
 
       // clear selection
       clearSelect: function () {
+        this.selected = false;
         for (var i = 0; i < this.elements.length; i++) {
           this.elements[i].style.backgroundColor = "";
           this.elements[i].style.color = "";
+        }
+      },
+
+      // perform delete event on all inputs
+      deleteAll: function () {
+        for (var i = 0; i < this.elements.length; i++) {
+          var input = this.elements[i];
+          input.value = input.value.substring(0, input.value.length - 1);
         }
       }
 
