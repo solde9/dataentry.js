@@ -171,8 +171,8 @@
 
         that = this,
 
-        // key press event controller
-        keyPressListener = function (e) {
+        // key down event controller
+        keyDownListener = function (e) {
           // store an entry for every key pressed
           keys[e.keyCode] = true;
 
@@ -207,14 +207,30 @@
 
         },
 
+        // key press event controller
+        keyPressListener = function (e) {
+          if (that.multipleOn) {
+            that.insertFromKeyCode(e.which, this);
+          }
+        },
+
         // key up event controller
         keyUpListener = function (e) {
           // mark keys that were released
           keys[e.keyCode] = false;
         };
 
-        elem.addEventListener("keydown",keyPressListener);
+        elem.addEventListener("keydown",keyDownListener);
         elem.addEventListener("keyup",keyUpListener);
+        elem.addEventListener("keypress",keyPressListener);
+      },
+
+      insertFromKeyCode: function (keyCode, elem) {
+        for (var i = 0; i < this.elements.length; i++) {
+          if (elem != this.elements[i]) {
+            this.elements[i].value = this.elements[i].value + String.fromCharCode(keyCode);
+          }
+        }
       },
 
       // select all elements
