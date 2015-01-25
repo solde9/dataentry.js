@@ -1,4 +1,4 @@
 dataentry.js
 ============
 
- a dummy input data entry
+Tools for manipulating form elements (work in progress).
