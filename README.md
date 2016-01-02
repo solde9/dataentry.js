@@ -1,7 +1,7 @@
 dataentry.js
 ============
 
-Tools for manipulating form elements (work in progress).
+Tools for manipulating form elements (WORK IN PROGRESS!!).
 
 ## License
 
